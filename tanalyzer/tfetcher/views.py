@@ -1,16 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import *
 from django.http import *
 import tweepy
+import mylinks
 
-CONSUMER_KEY = "8hEmZ6mbH41A77C3fTQO0oTci"
-CONSUMER_KEY_SECRET = "ki3gTojRlS4lo8BwH6yNZzj5zUZ1lzLz0UlxiovZm852Ak7OPs"
+CONSUMER_KEY = mylinks.CONSUMER_KEY
+CONSUMER_KEY_SECRET = mylinks.CONSUMER_KEY_SECRET
 access_token = ''
 access_token_secret = ''
+
+def home(request):
+    return render(request,"tfetcher/tfetcher1home.html")
 
 def index(request):
     auth=tweepy.OAuthHandler(CONSUMER_KEY,CONSUMER_KEY_SECRET)
     auth_url=auth.get_authorization_url(True)
+    print auth_url
     request.session['request_token'] = auth.request_token
+    print auth.request_token
     response = HttpResponseRedirect(auth_url)
     return response
     
@@ -24,5 +30,5 @@ def about(request):
     request.session['token'] = (auth.access_token, auth.access_token_secret)
     print auth.access_token+"hello"
     api = tweepy.API(auth)
-    api.update_status('tweepy + oauth!')
-    return HttpResponse("Click me <a href='/tfetcher/index'>back</a>")
+    context={"boldmessage":api.home_timeline()}
+    return render(request,"tfetcher/tfetcher1.html",context)
