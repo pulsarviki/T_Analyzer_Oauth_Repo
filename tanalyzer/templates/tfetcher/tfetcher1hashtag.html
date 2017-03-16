@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Tfetcher</title>
+        <script type="text/javascript">
+        var page=0;
+        window.onload = function (){
+          var retrievedObject = localStorage.getItem('containerObj');
+          console.log('retrievedObject: ', JSON.parse(retrievedObject));
+          if(retrievedObject!=null)
+            {
+              document.getElementById('hashtagid').value = JSON.parse(retrievedObject).val;
+              page=Number(JSON.parse(retrievedObject).page);
+            }
+        }
+        </script>
+    </head>
+    <body>
+      <div style="float:left; width:20%;">
+        <h1><a href="/tfetcher/tweets/">Tweets</a><br/><br/>
+        <a href="/tfetcher/hashtagsearch/">Hashtag Search</a></h1>
+      </div>
+      <div style="overflow:auto; float:left; width:80%;">
+        <br/><br/>
+        Hash Tag: <input id="hashtagid" type="text"/><br/>
+        Length: {{ len }}<br/>
+        <button onclick="searchHash();">Submit</button>
+        <script type="text/javascript">
+        function searchHash()
+        {
+          var contain={'val':document.getElementById('hashtagid').value}
+          localStorage.setItem('containerObj', JSON.stringify(contain));
+          window.location='/tfetcher/hashtagsearch/'+ document.getElementById('hashtagid').value;
+        }
+        </script>
+        {% for bold in boldmessage %}
+        <p>{{ bold.text }}</p>
+        {% endfor %}
+      </div>
+      <button onclick="nextHash();">Next</button>
+      <script>
+      function nextHash()
+      {
+        page=page+10;
+        window.location='/tfetcher/hashtagsearch/'+ document.getElementById('hashtagid').value+'/'+page;
+      }
+      </script>
+      <button onclick="prevHash();">Previous</button>
+      <script>
+      function prevHash()
+      {
+        if(page>10)
+          {
+            page=page-10;
+            window.location='/tfetcher/hashtagsearch/'+ document.getElementById('hashtagid').value+'/'+page;
+          }
+      }
+      </script>
+    </body>
+
+</html>

@@ -6,9 +6,17 @@
     </head>
 
     <body>
-        <h1>Tweets</h1>
-        <strong>{{ boldmessage }}</strong><br />
+      <div style="float:left; width:20%;">
+        <h1><a href="/tfetcher/tweets/">Tweets</a><br/><br/>
+        <a href="/tfetcher/hashtagsearch/">Hashtag Search</a></h1>
+      </div>
+      <div style="float:left; width:80%;">
+        <br/><br/>
+        {% for bolder in boldmessage%}
+        <strong>{{ bolder.text }}</strong><br />
+        {% endfor %}
         <a href="/tfetcher/about/">About</a><br />
+      </div>
 		<p>{{ content }}</p><br/>
     </body>
 

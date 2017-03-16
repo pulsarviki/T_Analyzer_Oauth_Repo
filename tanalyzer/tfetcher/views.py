@@ -19,8 +19,9 @@ def index(request):
     print auth.request_token
     response = HttpResponseRedirect(auth_url)
     return response
-    
+
 def about(request):
+    global api
     verifier = request.GET.get('oauth_verifier')
     request_token = request.session['request_token']
     del request.session['request_token']
@@ -32,3 +33,16 @@ def about(request):
     api = tweepy.API(auth)
     context={"boldmessage":api.home_timeline()}
     return render(request,"tfetcher/tfetcher1.html",context)
+
+def tweets(request):
+    context={"boldmessage":api.home_timeline()}
+    return render(request,"tfetcher/tfetcher1.html",context)
+
+def hashtagsearch(request,hashtag='',page=10):
+    print hashtag
+    print page
+    context={"boldmessage":""}
+    if hashtag is not '':
+        boldval=api.search(q=hashtag,count=page)
+        context={"boldmessage":boldval,"len":len(boldval),"page":page}
+    return render(request,"tfetcher/tfetcher1hashtag.html",context)
