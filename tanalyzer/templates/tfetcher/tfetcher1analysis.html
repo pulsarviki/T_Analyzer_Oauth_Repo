@@ -35,33 +35,14 @@
             window.location='/tfetcher/hashtagsearch/'+ document.getElementById('hashtagid').value;
           }
         </script>
-        {% for bold in boldmessage %}
-        <p>{{ bold }}</p>
-        <br/><br/>
-        {% endfor %}
-        <button onclick="nextHash();">Show more</button>
-        <script>
-          function nextHash()
-          {
-            window.page=window.page+10;
-            var contain={'val':document.getElementById('hashtagid').value,'len':window.page}
-            localStorage.setItem('containerObj', JSON.stringify(contain));
-            window.location='/tfetcher/hashtagsearch/'+ document.getElementById('hashtagid').value+'/'+window.page;
-          }
-        </script>
-        <button onclick="prevHash();">Show less</button>
-        <script>
-          function prevHash()
-          {
-            if(window.page>10)
-              {
-                window.page=window.page-10;
-                var contain={'val':document.getElementById('hashtagid').value,'len':window.page}
-                localStorage.setItem('containerObj', JSON.stringify(contain));
-                window.location='/tfetcher/hashtagsearch/'+ document.getElementById('hashtagid').value+'/'+window.page;
-              }
-          }
-        </script>
+
+        Impressions:
+        Tweets:
+        Retweets:
+        Tweeters:
+
+        <!-- Display data over time -->
+
       </div>
     </body>
 
